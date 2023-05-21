@@ -32,9 +32,15 @@ async function run() {
 
         const addedToyCollection = client.db("toyMarket").collection("addedToys");
 
+        // For Getting the first 20 data from MongoDB Database Collection
+        app.get("/toys", async (req, res) => {
+            const result = await addedToyCollection.find().toArray();
+            res.send(result);
+        });
+
         // User Specific data showing to the client-side from the server side & 'MongoDB' database
         app.get("/toys", async (req, res) => {
-            console.log(req.query.email);
+            // console.log(req.query.email);
             let query = {};
             if (req.query?.email) {
                 query = { email: req.query.email }
