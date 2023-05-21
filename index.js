@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
 // Middleware
@@ -32,11 +32,32 @@ async function run() {
 
         const addedToyCollection = client.db("toyMarket").collection("addedToys");
 
-        app.post("/addToys", async (req, res) => {
+        // User Specific data showing to the client-side from the server side & 'MongoDB' database
+        app.get("/toys", async (req, res) => {
+            console.log(req.query.email);
+            let query = {};
+            if (req.query?.email) {
+                query = { email: req.query.email }
+            }
+            const result = await addedToyCollection.find(query).toArray();
+            res.send(result);
+        });
+
+        // Sending & Storing data to 'MongoDB' database via server from the client-side
+        app.post("/toys", async (req, res) => {
             const addToy = req.body;
             console.log(addToy);
 
             const result = await addedToyCollection.insertOne(addToy);
+            res.send(result);
+        });
+
+        // Deleting a single item from collection - API
+        app.delete("/toys/:id", async (req, res) => {
+            const id = req.params.id;
+
+            const query = { _id: new ObjectId(id) };
+            const result = await addedToyCollection.deleteOne(query);
             res.send(result);
         });
 
