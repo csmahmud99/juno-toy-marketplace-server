@@ -32,6 +32,30 @@ async function run() {
 
         const addedToyCollection = client.db("toyMarket").collection("addedToys");
 
+        /* 
+            The Search Codes are commented for the clash with vercel. These codes are finely work with my local server for the 'All Toys Page' of my app
+        
+        */
+
+        // Creating index on the 'Toy Name' Field
+        // const indexKeys = { toyName: 1 };
+        // const indexOptions = { name: "toyNameSearch" };
+
+        // const result = await addedToyCollection.createIndex(indexKeys, indexOptions);
+
+        // Searching in All Toys Page in Client-side
+        // app.get("/toySearchByName/:text", async (req, res) => {
+        //     const searchText = req.params.text;
+
+        //     const result = await addedToyCollection.find({
+        //         $or: [
+        //             { toyName: { $regex: searchText, $options: "i" } }
+        //         ]
+        //     }).toArray();
+
+        //     res.send(result);
+        // });
+
         // For Getting the first 20 data from MongoDB Database Collection
         app.get("/toys", async (req, res) => {
             const result = await addedToyCollection.find().limit(20).toArray();
