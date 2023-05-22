@@ -58,6 +58,14 @@ async function run() {
             res.send(result);
         });
 
+        app.get("/allToysBySubCategory/:subcategory", async (req, res) => {
+            console.log(req.params.id);
+            const toys = await addedToyCollection.find({
+                subCategory: req.params.subcategory,
+            }).toArray();
+            res.send(toys);
+        });
+
         // Sending & Storing data to 'MongoDB' database via server from the client-side
         app.post("/toys", async (req, res) => {
             const addToy = req.body;
