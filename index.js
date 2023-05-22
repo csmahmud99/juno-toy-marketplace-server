@@ -38,6 +38,21 @@ async function run() {
             res.send(result);
         });
 
+        // Sorting All Toys as ascending as their price
+        app.get("/toys/:text", async (req, res) => {
+            console.log(req.params.text);
+            if (req.params.text == "ascending") {
+                const result = await addedToyCollection
+                    .find({}).sort({ price: 1 }).limit(20).toArray();
+                res.send(result);
+            }
+            else {
+                const result = await addedToyCollection
+                    .find({}).sort({ price: -1 }).limit(20).toArray();
+                res.send(result);
+            }
+        });
+
         // User Specific data showing to the client-side from the server side & 'MongoDB' database
         app.get("/toys", async (req, res) => {
             // console.log(req.query.email);
@@ -61,9 +76,10 @@ async function run() {
         // To get toys by their sub-category name through the tab
         app.get("/allToysBySubCategory/:subcategory", async (req, res) => {
             console.log(req.params.id);
-            const toys = await addedToyCollection.find({
-                subCategory: req.params.subcategory,
-            }).toArray();
+            const toys = await addedToyCollection
+                .find({
+                    subCategory: req.params.subcategory,
+                }).toArray();
             res.send(toys);
         });
 
