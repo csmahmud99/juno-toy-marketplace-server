@@ -58,6 +58,7 @@ async function run() {
             res.send(result);
         });
 
+        // To get toys by their sub-category name through the tab
         app.get("/allToysBySubCategory/:subcategory", async (req, res) => {
             console.log(req.params.id);
             const toys = await addedToyCollection.find({
