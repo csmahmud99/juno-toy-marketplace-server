@@ -44,17 +44,17 @@ async function run() {
         // const result = await addedToyCollection.createIndex(indexKeys, indexOptions);
 
         // Searching in All Toys Page in Client-side
-        // app.get("/toySearchByName/:text", async (req, res) => {
-        //     const searchText = req.params.text;
+        app.get("/toySearchByName/:text", async (req, res) => {
+            const searchText = req.params.text;
 
-        //     const result = await addedToyCollection.find({
-        //         $or: [
-        //             { toyName: { $regex: searchText, $options: "i" } }
-        //         ]
-        //     }).toArray();
+            const result = await addedToyCollection.find({
+                $or: [
+                    { toyName: { $regex: searchText, $options: "i" } }
+                ]
+            }).toArray();
 
-        //     res.send(result);
-        // });
+            res.send(result);
+        });
 
         // For Getting the first 20 data from MongoDB Database Collection
         app.get("/toys", async (req, res) => {
