@@ -34,7 +34,7 @@ async function run() {
 
         // For Getting the first 20 data from MongoDB Database Collection
         app.get("/toys", async (req, res) => {
-            const result = await addedToyCollection.find().toArray();
+            const result = await addedToyCollection.find().limit(20).toArray();
             res.send(result);
         });
 
